@@ -2,6 +2,7 @@
 #define __TCB_H__
 
 #include <ucontext.h>
+#include <string.h>
 
 typedef struct TCB_t{
 		struct TCB_t *next;
@@ -10,12 +11,13 @@ typedef struct TCB_t{
 }TCB_t;
 
 
-void init_TCB( TCB_t *tcb, void *function, void *stackP, int stack_size)
+void init_TCB( TCB_t *tcb, void *function, void *stackP, int stack_size,ucontext_t *exit_context)
 {
 	memset(tcb,'\0',sizeof(TCB_t));
 	getcontext(&tcb->context);
 	tcb->context.uc_stack.ss_sp = stackP;
 	tcb->context.uc_stack.ss_size = (size_t)stack_size;
+	tcb->context.uc_link = exit_context;
 	makecontext(&tcb->context, function, 0);
 }
 

@@ -1,13 +1,14 @@
 #ifndef __q_H__
 #define __q_H__
 
-#include <TCB.h>
+#include "TCB.h"
 
 
 void InitQ  (TCB_t**);
 void AddQ   (TCB_t**,TCB_t**);
-int  DelQ   (TCB_t**);
+void DelQ   (TCB_t**);
 void RotateQ(TCB_t**);
+void PrintQ(TCB_t*);
 
 
 void InitQ(TCB_t** Q)
@@ -18,6 +19,7 @@ void InitQ(TCB_t** Q)
 
 void AddQ(TCB_t** Q, TCB_t** temp)
 {
+	InitQ(temp);
         if(*Q == NULL)
                 *Q = *temp;
         else
@@ -68,6 +70,28 @@ void RotateQ(TCB_t** Q)
                 (*Q) = (*Q)->next;
 
 }
+
+
+void PrintQ(TCB_t* Q)
+{
+        TCB_t* temp;
+        temp = Q;
+
+        if(Q == NULL)
+                printf("Empty Queue\n");
+        else
+        {
+                temp = temp->next;
+                while( temp != Q)
+                {
+                        printf("id \t");
+                        temp = temp->next;
+                }
+        }
+
+        printf("\n");
+}
+
 
 
 #endif
