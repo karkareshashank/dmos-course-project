@@ -21,7 +21,7 @@ void producer()
 			yield();
 		else
 		{
-			printf("%d --- %d --- count \n",count,PRODUCE_LIMIT);
+			printf("%d --- %d --- produce \n",id,get_threadid());
 			buffer[count] = id;
 			count++;
 			id++;
@@ -49,7 +49,7 @@ void consumer()
 		{
 			flag = 0;
 			item = buffer[--count];
-			printf("%d \n",item);
+			printf("%d --- %d --- consume\n",item,get_threadid());
 		}
 
 	}
@@ -60,10 +60,11 @@ void consumer()
 
 int main(int argc,char** argv)
 {	
+	int tid;
 
-	start_thread(producer);
-	start_thread(producer);	
-	start_thread(consumer);
+	tid = start_thread((void*)producer,NULL);
+	tid = start_thread((void*)producer,NULL);	
+	tid = start_thread((void*)consumer,NULL);
 
 	join_all_thread();
 
